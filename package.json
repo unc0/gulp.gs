@@ -1,6 +1,6 @@
 {
   "name": "gulp.gs",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A tiny wrapper around Gulp to run your 'gulpfile.gs'(gorillascript).",
   "main": "index.js",
   "bin": {
