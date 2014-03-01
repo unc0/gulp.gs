@@ -1,0 +1,31 @@
+{
+  "name": "gulp.gs",
+  "version": "0.0.1",
+  "description": "A tiny wrapper around Gulp to run your 'gulpfile.gs'(gorillascript).",
+  "main": "index.js",
+  "bin": {
+    "gulp.gs": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/unc0/gulp.gs"
+  },
+  "keywords": [
+    "gulp",
+    "wrapper",
+    "gorillascript"
+  ],
+  "author": "unc0 <trash__box at 163.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/unc0/gulp.gs/issues"
+  },
+  "homepage": "https://github.com/unc0/gulp.gs",
+  "dependencies": {
+    "gorillascript": "^0.9.10",
+    "gulp": "^3.5.2"
+  }
+}
