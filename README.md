@@ -27,3 +27,31 @@ gulp.task 'gorilla', #
 gulp.task 'watch', #
   gulp.watch 'src/gorilla/*.gs', ['gorilla']
 ```
+
+Example gulpfile.gs with watchify and source map support
+-------
+
+```gorillascript
+// npm i watchify gorillaify vinyl-source-stream --save-dev
+require! gulp
+require! watchify
+let source = require 'vinyl-source-stream'
+
+gulp.task 'watch', #
+  let out = process.stdout
+  let start = # out.write '[watchify] Rebundling app...'
+  let done = # out.write 'Done\n'
+
+  let bundler = watchify './src/gorilla/app.gs'
+  bundler.transform 'gorillaify'
+
+  let rebundle = #
+    start()
+    // turn on debug option to generate source map
+    return bundler.bundle { +debug }, done
+                  .pipe source 'app.js'
+                  .pipe gulp.dest './build/js'
+  bundler.on 'update', rebundle
+  return rebundle()
+
+```
