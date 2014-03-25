@@ -11,28 +11,45 @@ Install
 Example gulpfile.gs
 -------
 
+`npm install gorillaify browserify vinyl-source-stream gulp-buffer gulp-rename --save-dev`
+
 ```gorillascript
+let GS_OPTIONS =
+  entry: './src/gorilla/app.gs'
+  dest-path: './build/js'
+  dest-file: 'app.js'
+
 require! gulp
-let browserify = require 'gulp-browserify'  // npm i gulp-browserify
+require! browserify
+require! gorillaify
+
+let source = require 'vinyl-source-stream'
 let rename = require 'gulp-rename'
+let buffer = require 'gulp-buffer'
+
+let gulp-gorillaify = #(opts, bundle-opts = {})
+  opts.extension or= ['.gs']
+  let b = browserify opts
+  b.transform gorillaify
+  b.bundle bundle-opts
 
 gulp.task 'gorilla', #
-  gulp.src 'src/gorilla/app.gs', { -read }  // disable read stream for AltJS languages
-      .pipe browserify
-              transform: ['gorillaify']     // npm i gorillaify --save-dev
-              extensions: ['.gs']
-      .pipe rename 'app.js'                 // npm i gulp-rename --save-dev
-      .pipe gulp.dest './build/js'
+  let s = gulp-gorillaify entries: GS_OPTIONS.entry
+  s.pipe source GS_OPTIONS.entry
+   .pipe buffer()
+   .pipe rename GS_OPTIONS.dest-file
+   .pipe gulp.dest GS_OPTIONS.dest-path
 
 gulp.task 'watch', #
-  gulp.watch 'src/gorilla/*.gs', ['gorilla']
+  gulp.watch GS_OPTIONS.entry, ['gorilla']
 ```
 
 Example gulpfile.gs with watchify and source map support
 -------
 
+`npm install watchify gorillaify vinyl-source-stream --save-dev`
+
 ```gorillascript
-// npm i watchify gorillaify vinyl-source-stream --save-dev
 require! gulp
 require! watchify
 let source = require 'vinyl-source-stream'
